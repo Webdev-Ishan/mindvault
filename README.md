@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 BrainStorm — Your Second Brain App
 
-## Getting Started
+**BrainStorm** is a personal knowledge management app designed to help you capture, organize, and revisit your ideas — turning your digital brain into a reliable partner for learning and creativity.
 
-First, run the development server:
+## 🚀 Live Demo & Screenshots
+
+[Brainstorm](https://www.brainstormideas.xyz)
+
+## 🎯 Key Features
+
+- **Note capture**
+
+  - Create, edit, delete quick notes
+
+- **Tagging & Organization**
+
+  - Add tags or categories for easy retrieval
+
+- **Search & Filter**
+
+  - Instantly find notes by keyword or tag
+
+- **Responsive UI**
+  - Clean, mobile-friendly design using [Tailwind CSS ]
+
+---
+
+## 🧩 Tech Stack
+
+- **Frontend**: React or Next.js, Tailwind CSS
+- **Backend**: Node.js + Express or Next.js API Routes
+- **Database**: MongoDB via Mongoose
+- **Authentication**: JWT
+- **State Management**: Redux
+
+## 📦 Installation & Local Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ git clone https://github.com/Webdev-Ishan/BrainStorm.git
+ cd BrainStorm
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+ npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+```bash
 
-To learn more about Next.js, take a look at the following resources:
+DATABASE_URL=<your_db_connection_string>
+JWT_SECRET=<random-secret>
+PORT=3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
 
-## Deploy on Vercel
+## Run locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm run dev
+
+
+```
+
+## Creating a Note
+
+    Fill out the form (title, content, tags)
+
+    Submit → The note saves to the database and instantly appears in your dashboard
+
+## Searching/Filtering
+
+    Type in search field → Note list updates in real-time
+
+## Editing / Deleting
+
+    Use the action icons  edit,  delete button on your saved notes
+
+## 📄 License
+
+Licensed under MIT License — feel free to reuse and build upon this project!
+
+## 👤 About the Author
+
+Ishan Saini — Full-stack developer passionate about productivity tools and clean software architecture.
+Connect on LinkedIn — [www.linkedin.com/in/ishan-saini-49b6842a6].
