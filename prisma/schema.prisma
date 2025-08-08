@@ -15,9 +15,9 @@ datasource db {
 
 model User {
   id             String    @id @default(uuid())
-  username       String    @unique @db.VarChar(10)
-  password       String    @db.VarChar(20)
-  email          String    @unique @db.VarChar(36)
+  username       String
+  password       String    
+  email          String    @unique
   contactRequest Contact[] @relation("UserContacts")
   contents       Content[] @relation("UserContents")
   Link           Link[]
