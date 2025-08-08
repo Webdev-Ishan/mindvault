@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(uuid())
+  username       String    @unique @db.VarChar(10)
+  password       String    @db.VarChar(20)
+  email          String    @unique @db.VarChar(36)
+  contactRequest Contact[] @relation("UserContacts")
+  contents       Content[] @relation("UserContents")
+  Link           Link[]
+  Review         Review[]
+}
+
+model Contact {
+  id       String @id @default(uuid())
+  Fullname String
+  email    String @unique
+  Subject  String
+  Message  String
+
+  // Relation to User
+  user   User?   @relation("UserContacts", fields: [userId], references: [id])
+  userId String?
+}
+
+model Content {
+  id    String      @id @default(uuid())
+  link  String      @unique
+  type  ContentType
+  title String
+
+  // Relation to Link
+  sharable   Link?   @relation(fields: [sharableId], references: [id])
+  sharableId String?
+
+  // Relation to Tag
+  tags Tag[] @relation("ContentTags")
+
+  // Relation to User
+  user   User?   @relation("UserContents", fields: [userId], references: [id])
+  userId String?
+}
+
+model Link {
+  id   String @id @default(uuid())
+  link String @unique
+
+  // Relation to User
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  // Relation to Content (sharable)
+  contents Content[]
+}
+
+model Tag {
+  id    String @id @default(uuid())
+  title String
+
+  // Many-to-many relation with Content
+  contents Content[] @relation("ContentTags")
+}
+
+model Review {
+  id      String @id @default(uuid())
+  content String
+  name    String
+
+  // Relation to User
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+enum ContentType {
+  linkedin
+  facebook
+  Instagram
+  Youtube
+}
