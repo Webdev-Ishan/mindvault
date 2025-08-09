@@ -80,7 +80,7 @@ export default function RegisterPage() {
           </h1>
           
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4 text-black">
             <div>
               <label className="block text-black mb-1">Full Name</label>
               <input

@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
 const contactSchema = z.object({
-  Subject: z.string().min(3).max(20),
-  Message: z.string().max(200),
+  Subject: z.string().min(1),
+  Message: z.string().min(10).max(200),
 });
 
 export async function POST(req: NextRequest) {
@@ -34,29 +34,45 @@ export async function POST(req: NextRequest) {
       }
     );
   }
-  const userid = token.id as string;
+  const userid = token?.id as string | undefined;
 
   const { Subject, Message } = parsedBody.data;
 
   try {
-    const userExist = await prisma.user.findUnique({
+    const userExist = await prisma.user.findFirst({
       where: {
         id: userid,
       },
     });
 
     if (!userExist) {
-      if (userExist) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "User not Exist",
-          },
-          {
-            status: 409,
-          }
-        );
-      }
+      return NextResponse.json(
+        {
+          success: false,
+          message: "User not Exist",
+        },
+        {
+          status: 409,
+        }
+      );
+    }
+
+    const existRequest = await prisma.contact.findFirst({
+      where: {
+        userId: userid,
+      },
+    });
+
+    if (existRequest) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Request already Exist",
+        },
+        {
+          status: 409,
+        }
+      );
     }
 
     await prisma.contact.create({

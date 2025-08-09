@@ -96,7 +96,7 @@ export default function SignIn() {
             </button>
           </p>
 
-          <form onSubmit={submithandler} className="mt-6 space-y-4">
+          <form onSubmit={submithandler} className="mt-6 space-y-4 text-black">
             <div>
               <label className="block text-gray-700 mb-1">Email Address</label>
               <input
