@@ -122,7 +122,7 @@ export default function Profile() {
       {/* Update Profile Button */}
       <div className="absolute top-20 right-4">
         <Button
-          onClick={() => router.push("/update")}
+          onClick={() => router.push("/UpdateProfile")}
           className="bg-blue-500 text-white hover:bg-blue-600 shadow-md"
           size={"sm"}
         >

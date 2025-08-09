@@ -11,34 +11,40 @@ export const Navbar = () => {
   return (
     <div>
       {/* Navbar */}
-      <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <nav className="bg-white  border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center">
+            <div
+              onClick={() => router.push("/")}
+              className="flex items-center cursor-pointer"
+            >
               <span className="text-blue-500 font-bold text-xl">MindVault</span>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link
-                href="#features"
-                className="text-gray-700 hover:text-blue-500"
+              <button
+                onClick={() => router.push("/Profile")}
+                className="text-gray-700 cursor-pointer hover:text-blue-500"
               >
-                Features
-              </Link>
-              <Link href="#about" className="text-gray-700 hover:text-blue-500">
+                Profile
+              </button>
+              <button
+                onClick={() => router.push("/About")}
+                className="text-gray-700 cursor-pointer hover:text-blue-500"
+              >
                 About
-              </Link>
-              <Link
-                href="#contact"
-                className="text-gray-700 hover:text-blue-500"
+              </button>
+              <button
+                onClick={() => router.push("/Contact")}
+                className="text-gray-700 cursor-pointer hover:text-blue-500"
               >
                 Contact
-              </Link>
+              </button>
               <button
                 onClick={() => router.push("/register")}
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg cursor-pointer hover:bg-blue-600"
               >
                 Get Started
               </button>
@@ -48,7 +54,7 @@ export const Navbar = () => {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="text-gray-700 hover:text-blue-500"
+                className="text-gray-700 hover:text-blue-500 cursor-pointer"
               >
                 {menuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -65,18 +71,18 @@ export const Navbar = () => {
             >
               Profile
             </button>
-            <Link
-              href="#about"
+            <button
+              onClick={() => router.push("/About")}
               className="block py-2 text-gray-700 hover:text-blue-500"
             >
               About
-            </Link>
-            <Link
-              href="#contact"
+            </button>
+            <button
+              onClick={() => router.push("/Contact")}
               className="block py-2 text-gray-700 hover:text-blue-500"
             >
               Contact
-            </Link>
+            </button>
             <button
               onClick={() => router.push("/register")}
               className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"

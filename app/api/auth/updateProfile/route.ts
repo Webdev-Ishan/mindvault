@@ -11,7 +11,7 @@ const registerScheam = z.object({
 
 const saltvalue = process.env.SALT!;
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const data = await req.json();
   const parsedBody = registerScheam.safeParse(data);
 
@@ -35,11 +35,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (userExist) {
+    if (!userExist) {
       return NextResponse.json(
         {
           success: false,
-          message: "User already Exist",
+          message: "User not Exist",
         },
         {
           status: 409,
@@ -47,21 +47,30 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const hashedpassword = await bcrypt.compare(password, userExist.password);
     const salt = await bcrypt.genSalt(Number(saltvalue));
-    const hashedpassword = await bcrypt.hash(password, salt);
-
-    await prisma.user.create({
-      data: {
-        username: username,
-        email: email,
-        password: hashedpassword,
-      },
-    });
+    const hashedpasswordnew = await bcrypt.hash(password, salt);
+    if (
+      userExist.email !== email ||
+      userExist.username !== username ||
+      !hashedpassword
+    ) {
+      await prisma.user.update({
+        where: {
+          email: userExist.email,
+        },
+        data: {
+          username: username,
+          email: email,
+          password: hashedpasswordnew,
+        },
+      });
+    }
 
     return NextResponse.json(
       {
         success: true,
-        message: "Registration Successfull",
+        message: "Updation Successfull",
       },
       {
         status: 200,
