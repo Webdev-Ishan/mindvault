@@ -132,7 +132,7 @@ export default function Profile() {
 
       <main className="flex flex-col items-center justify-center flex-grow px-6 text-center py-20">
         <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-wide">
-          Welcome 
+          Welcome
           <span className="text-blue-500 uppercase font-bold"> {username}</span>
         </h2>
 
@@ -152,7 +152,7 @@ export default function Profile() {
         </div>
 
         <Button
-          onClick={() => router.push("/content")}
+          onClick={() => router.push("/Create")}
           className="bg-blue-500 text-white hover:bg-blue-600 shadow-md"
         >
           Add Link +
@@ -186,13 +186,13 @@ export default function Profile() {
         {/* Cards */}
         <div className="flex flex-wrap justify-center gap-6">
           {arr.length > 0 ? (
-            arr.map((item) => (
+            arr.map((item, idx) => (
               <div
-                key={item._id}
-                className="bg-white rounded-xl shadow-md w-72 overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                key={idx}
+                className="bg-white rounded-xl shadow-md w-full h-auto  overflow-hidden border-black border-1 hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="p-4">
-                  <div className="h-48 border border-gray-200 rounded-lg mb-4 bg-gray-50 flex items-center justify-center">
+                <div className="p-2">
+                  <div className="h-48  w-full mb-6 bg-gray-50 flex items-center justify-center">
                     <Card
                       link={item.link}
                       title={item.title}
@@ -200,7 +200,8 @@ export default function Profile() {
                       id={item._id}
                     />
                   </div>
-                  <h2 className="text-lg font-semibold text-gray-800 mb-3">
+
+                  <h2 className="text-lg font-semibold text-gray-800 mt-6">
                     {item.title}
                   </h2>
                   <div className="flex justify-end gap-2">

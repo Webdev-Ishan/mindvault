@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type ReviewType = {
   id: string;
@@ -16,7 +18,7 @@ type backendResponse = {
 export default function Reviews() {
   const [reviews, setReviews] = useState<ReviewType[]>([]);
   const [loading, setLoading] = useState(true);
-
+ const router = useRouter();
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -66,6 +68,16 @@ export default function Reviews() {
           ))}
         </div>
       )}
+
+      <div className="flex justify-center mt-10">
+<Button
+          onClick={() => router.push("/GiveReviews")}
+          className="bg-blue-500 text-white hover:bg-blue-600 shadow-md"
+          size={"sm"}
+        >
+          Give Review
+        </Button>
+      </div>
     </div>
   );
 }
