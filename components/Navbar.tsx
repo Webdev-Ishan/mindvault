@@ -1,95 +1,92 @@
 "use client";
-
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import axios from "axios";
+import { useState } from "react";
 
-export default function Navbar() {
+export const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
-  
-  const [buttonProp, setButtonProp] = useState("Get Started");
-  const [neuron, setNeuron] = useState("");
-
-
-
-  const url = process.env.NEXT_PUBLIC_API_URL;
-
-  const buttonHandler = async () => {
-    if (loginStatus) {
-      try {
-        const response = await axios.post(
-          `${url}/api/auth/logout`,
-          {},
-          { withCredentials: true }
-        );
-
-        if (response.data?.success) {
-          localStorage.removeItem("token");
-         
-          setButtonProp("Get Started");
-          toast.success("Logout Successful");
-        } else {
-          toast.error("Unable to logout");
-        }
-      } catch (error: any) {
-        toast.error(error.message);
-      }
-    } else {
-      router.push("/SignIn");
-    }
-  };
-
-  const fetchBrain = (e: React.FormEvent) => {
-    e.preventDefault();
-    router.push(`/braincontent/${neuron}`);
-    setNeuron("");
-  };
-
-  useEffect(() => {
-    setButtonProp(loginStatus ? "Logout" : "Get Started");
-  }, [loginStatus]);
 
   return (
-    <nav className="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-sm hover:shadow-purple-500 duration-300">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-8 text-purple-600"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-            />
-          </svg>
-          <span className="self-center text-2xl font-bold text-blue-600">
-            BrainStorm
-          </span>
-        </Link>
+    <div>
+      {/* Navbar */}
+      <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <span className="text-blue-500 font-bold text-xl">MindVault</span>
+            </div>
 
-        {/* Auth Button */}
-        <Button
-          onClick={buttonHandler}
-          className={loginStatus ? "bg-red-500 text-white" : "bg-purple-500 text-white"}
-          size="sm"
-        >
-          {buttonProp}
-        </Button>
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              <Link
+                href="#features"
+                className="text-gray-700 hover:text-blue-500"
+              >
+                Features
+              </Link>
+              <Link href="#about" className="text-gray-700 hover:text-blue-500">
+                About
+              </Link>
+              <Link
+                href="#contact"
+                className="text-gray-700 hover:text-blue-500"
+              >
+                Contact
+              </Link>
+              <Link
+                href="#get-started"
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              >
+                Get Started
+              </Link>
+            </div>
 
-        {/* Links */}
-        <div className="hidden md:flex gap-6">
-          <Link href="/" className="text-purple-500 hover:text-blue-600">Home</Link>
-          <Link href="/About" className="text-purple-500 hover:text-blue-600">About</Link>
-          <Link href="/Profile" className="text-purple-500 hover:text-blue-600">Profile</Link>
-          <Link href="/Contact" className="text-purple-500 hover:text-blue-600">Contact</Link>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="text-gray-700 hover:text-blue-500"
+              >
+                {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200 px-4 pb-4">
+            <Link
+              href="#features"
+              className="block py-2 text-gray-700 hover:text-blue-500"
+            >
+              Features
+            </Link>
+            <Link
+              href="#about"
+              className="block py-2 text-gray-700 hover:text-blue-500"
+            >
+              About
+            </Link>
+            <Link
+              href="#contact"
+              className="block py-2 text-gray-700 hover:text-blue-500"
+            >
+              Contact
+            </Link>
+            <Link
+              href="#get-started"
+              onClick={() => router.push("/register")}
+              className="block py-2 mt-2 bg-blue-500 text-white text-center rounded-lg hover:bg-blue-600"
+            >
+              Get Started
+            </Link>
+          </div>
+        )}
+      </nav>
+    </div>
+  );
+};

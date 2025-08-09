@@ -141,14 +141,14 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-2 flex w-full flex-col items-center justify-center gap-4 border-t border-stone-200 py-4 md:flex-row md:justify-between">
           <small className="font-sans antialiased text-sm text-center">
-            © 2025{" "}
+            © 2025{"   "}
             <a
               href="https://www.buildingasecondbrain.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline font-bold text-blue-600"
+              className="hover:underline ml-1 mr-1 font-bold text-blue-600"
             >
-              BrainStorm
+                MindVault
             </a>
             . All Rights Reserved.
           </small>

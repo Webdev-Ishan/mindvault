@@ -16,14 +16,14 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: {
           label: "email",
-          type: "text",
+          type: "email",
           placeholder: "jsmith@gmail.com",
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          throw new Error("Email or passwordf is wrong");
+          throw new Error("Email or password is missing");
         }
 
         try {
@@ -37,12 +37,12 @@ export const authOptions: NextAuthOptions = {
           }
 
           const samePassword = await bcrypt.compare(
-            existUser.password,
-            credentials.password
+            credentials.password,
+            existUser.password
           );
 
           if (!samePassword) {
-            throw new Error("Email or passwordf is wrong");
+            throw new Error("Email or password is wrong");
           }
 
           return {
@@ -97,10 +97,11 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user.id = token.id), (session.user.username = token.username);
+        session.user.id = token.id;
+        session.user.username = token.username;
       }
       return session;
     },
   },
-  secret: process.env.JWT_SECRET,
+  secret: process.env.NEXT_AUTH_SECRET,
 };
