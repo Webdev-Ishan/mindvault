@@ -5,13 +5,13 @@ import { getToken } from "next-auth/jwt"; // if using next-auth
 
 export async function GET(req: NextRequest) {
   try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const token = await getToken({ req, secret: process.env.NEXT_AUTH_SECRET });
     const userId = token?.id as string | undefined;
 
     if (!userId) {
       return NextResponse.json(
         { success: false, message: "Login first please" },
-        { status: 403 }
+        { status: 401 }
       );
     }
 

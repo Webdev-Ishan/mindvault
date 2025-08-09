@@ -43,8 +43,6 @@ export default function Profile() {
   const [arr, setArr] = useState<ContentItem[]>([]);
   const [query, setQuery] = useState("");
 
-  const url = process.env.NEXT_PUBLIC_API_URL;
-
   // Redirect if not logged in
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -54,7 +52,7 @@ export default function Profile() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get<BackendResponse>(`${url}/api/auth/profile`);
+      const response = await axios.get<BackendResponse>(`/api/auth/getProfile`);
       if (response.data?.success) {
         setEmail(response.data.user.email);
         setUsername(response.data.user.username);
@@ -65,10 +63,23 @@ export default function Profile() {
         setUsername("");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error);
-        setEmail("");
-        setUsername("");
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        if (status === 401) {
+          toast.error("Please login first");
+          console.log(error);
+        } else if (status === 403) {
+          toast.error("User not exist");
+          console.log(error);
+        } else {
+          toast.error("Soemthign went wrong");
+          console.log(error);
+        }
+      } else {
+        if (error instanceof Error) {
+          toast.error("Internal Server Error");
+          console.log(error);
+        }
       }
     }
   };
@@ -76,7 +87,9 @@ export default function Profile() {
   const onSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post<BackendResponse2>(`${url}/api/user/search`, { query });
+      const response = await axios.post<BackendResponse2>(`/api/user/search`, {
+        query,
+      });
       if (response.data?.success) {
         setArr(response.data.searchresult);
         setQuery("");
@@ -119,15 +132,16 @@ export default function Profile() {
 
       <main className="flex flex-col items-center justify-center flex-grow px-6 text-center py-20">
         <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-wide">
-          Welcome,&nbsp;
-          <span className="text-blue-500 uppercase font-bold">{username}</span>
+          Welcome 
+          <span className="text-blue-500 uppercase font-bold"> {username}</span>
         </h2>
 
         <p className="text-base md:text-lg text-gray-600 max-w-2xl mb-6 leading-relaxed">
-          <span className="font-semibold text-blue-500 underline underline-offset-4">
+          <span className="font-semibold text-blue-500 text-xl">
             You are now in your second brain —
           </span>{" "}
-          a creative space where your thoughts, links, and knowledge come together seamlessly.
+          a creative space where your thoughts, links, and knowledge come
+          together seamlessly.
         </p>
 
         <div className="bg-blue-50 text-gray-800 px-6 py-4 rounded-xl shadow-sm mb-8">

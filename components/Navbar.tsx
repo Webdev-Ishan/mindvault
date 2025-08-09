@@ -59,12 +59,12 @@ export const Navbar = () => {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200 px-4 pb-4">
-            <Link
-              href="#features"
+            <button
+              onClick={() => router.push("/Profile")}
               className="block py-2 text-gray-700 hover:text-blue-500"
             >
-              Features
-            </Link>
+              Profile
+            </button>
             <Link
               href="#about"
               className="block py-2 text-gray-700 hover:text-blue-500"
