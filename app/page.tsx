@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -31,6 +30,92 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Features Section */}
+      <section className="py-16 px-6 bg-white text-center">
+        <h2 className="text-3xl font-bold text-gray-900">
+          Why Choose <span className="text-blue-500">MindVault</span>?
+        </h2>
+        <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
+          We make it effortless to store, organize, and recall your ideas with
+          powerful yet easy-to-use tools.
+        </p>
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          <div className="p-6 bg-blue-50 rounded-lg shadow hover:shadow-md transition">
+            <h3 className="text-xl font-semibold text-blue-500">Fast Search</h3>
+            <p className="text-gray-600 mt-2">
+              Find exactly what you need instantly with advanced search and
+              smart filters.
+            </p>
+          </div>
+          <div className="p-6 bg-blue-50 rounded-lg shadow hover:shadow-md transition">
+            <h3 className="text-xl font-semibold text-blue-500">
+              Organized Notes
+            </h3>
+            <p className="text-gray-600 mt-2">
+              Keep your thoughts neatly categorized so nothing gets lost.
+            </p>
+          </div>
+          <div className="p-6 bg-blue-50 rounded-lg shadow hover:shadow-md transition">
+            <h3 className="text-xl font-semibold text-blue-500">
+              Secure Storage
+            </h3>
+            <p className="text-gray-600 mt-2">
+              Your data is encrypted and safe, so you can focus on thinking big.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 px-6 bg-gradient-to-b from-blue-50 to-white text-center">
+        <h2 className="text-3xl font-bold text-gray-900">How It Works</h2>
+        <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
+          MindVault is built to work seamlessly in three simple steps.
+        </p>
+        <div className="mt-10 grid gap-8 sm:grid-cols-3 max-w-6xl mx-auto">
+          <div className="p-6 rounded-lg border border-gray-200">
+            <div className="text-blue-500 text-3xl font-bold">1</div>
+            <h3 className="mt-4 font-semibold text-lg text-blue-500">Capture</h3>
+            <p className="text-gray-600 mt-2">
+              Save notes, ideas, and links in seconds from any device.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg border border-gray-200">
+            <div className="text-blue-500 text-3xl font-bold">2</div>
+            <h3 className="mt-4 font-semibold text-lg text-blue-500">Organize</h3>
+            <p className="text-gray-600 mt-2">
+              Tag and categorize your content for easy retrieval.
+            </p>
+          </div>
+          <div className="p-6 rounded-lg border border-gray-200">
+            <div className="text-blue-500 text-3xl font-bold">3</div>
+            <h3 className="mt-4 font-semibold text-lg text-blue-500">Retrieve</h3>
+            <p className="text-gray-600 mt-2">
+              Access your saved knowledge instantly with our fast search.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-16 px-6 bg-blue-500 text-white text-center">
+        <h2 className="text-3xl font-bold">
+          Ready to Unlock Your Second Brain?
+        </h2>
+        <p className="mt-3 max-w-xl mx-auto">
+          Join thousands of productive people who rely on MindVault to remember,
+          organize, and retrieve their most valuable ideas.
+        </p>
+        <div className="mt-6 flex justify-center">
+          <div
+            onClick={() => router.push("/register")}
+            className="bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold cursor-pointer hover:bg-blue-100"
+          >
+            Get Started Now
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

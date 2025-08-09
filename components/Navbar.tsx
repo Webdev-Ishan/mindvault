@@ -18,7 +18,7 @@ export const Navbar = () => {
               onClick={() => router.push("/")}
               className="flex items-center cursor-pointer"
             >
-              <BrainIcon className="text-blue-500 font-bold h-32  mr-2" />
+              <BrainIcon className="text-blue-500 font-bold h-32 hover:text-purple-500  mr-2" />
               <span className="text-blue-500 font-bold text-2xl">
                 MindVault
               </span>
