@@ -1,40 +1,77 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+
+type backendresponse = {
+  success: boolean;
+  message: string;
+};
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/Profile");
+    }
+  }, [session, status, router]);
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Core signup functionality will go here
-    console.log("Form submitted:", form);
+    try {
+      const response = await axios.post<backendresponse>(
+        "/api/auth/register",
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data && response.data.success) {
+        toast.success("Registration Successfull");
+        router.push("/Profile");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        if (status === 400) {
+          toast.error("Invalid Inputs");
+          console.log(error);
+        } else if (status === 409) {
+          toast.error("User already exists");
+          router.push("/signIn");
+          console.log(error);
+        } else if (status === 500) {
+          toast.error("Something went wrong");
+          console.log(error);
+        }
+      } else {
+        if (error instanceof Error) {
+          toast.error(error.message);
+          console.log(error);
+        }
+      }
+    } finally {
+      setemail("");
+      setpassword("");
+      setusername("");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex flex-col">
-      {/* Navbar */}
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <span className="text-blue-500 font-bold text-xl">MindVault</span>
-          <button
-            onClick={() => router.push("/")}
-            className="text-gray-600 hover:text-blue-500"
-          >
-            Back to Home
-          </button>
-        </div>
-      </nav>
-
       {/* Signup Form */}
       <main className="flex-grow flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
@@ -47,12 +84,12 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div>
-              <label className="block text-gray-700 mb-1">Full Name</label>
+              <label className="block text-black mb-1">Full Name</label>
               <input
                 type="text"
                 name="name"
-                value={form.name}
-                onChange={handleChange}
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
@@ -63,8 +100,8 @@ export default function RegisterPage() {
               <input
                 type="email"
                 name="email"
-                value={form.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
@@ -75,8 +112,8 @@ export default function RegisterPage() {
               <input
                 type="password"
                 name="password"
-                value={form.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
@@ -93,7 +130,7 @@ export default function RegisterPage() {
           <p className="mt-6 text-center text-gray-600">
             Already have an account?{" "}
             <button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/signIn")}
               className="text-blue-500 hover:underline"
             >
               Log In
@@ -101,12 +138,6 @@ export default function RegisterPage() {
           </p>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-6 text-center text-gray-500">
-        © {new Date().getFullYear()} MindVault. All rights reserved.
-      </footer>
     </div>
   );
 }
-

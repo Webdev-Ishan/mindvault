@@ -1,13 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-
 import { signIn, useSession } from "next-auth/react";
 
 export default function SignIn() {
-  const navigate = useRouter();
+  const router = useRouter();
 
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -18,37 +16,41 @@ export default function SignIn() {
   const validateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 36) {
       setemail(e.target.value.slice(0, 36));
-      setemailToggle(!emailToggle);
+      setemailToggle(false);
     } else {
       setemail(e.target.value);
+      setemailToggle(true);
     }
   };
 
   const validatePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 20 || e.target.value.length <= 8) {
       setpassword(e.target.value.slice(0, 20));
-      setpasswordToggle(!passwordToggle);
+      setpasswordToggle(false);
     } else {
       setpassword(e.target.value);
+      setpasswordToggle(true);
     }
   };
+
   const { data: session, status } = useSession();
   useEffect(() => {
     if (status === "authenticated") {
-      navigate.push("/");
+      router.push("/Profile");
     }
-  }, [session, status, navigate]);
+  }, [session, status, router]);
 
   const submithandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await signIn("credentials", {
       email: email,
       password: password,
-      redirect:false
+      redirect: false,
     });
 
     if (response?.ok) {
-      toast.success("LoggedIn successfull.");
+      toast.success("Logged in successfully.");
+      router.push("/Profile");
       setemail("");
       setpassword("");
     } else {
@@ -60,90 +62,82 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-      <div className="text-center mt-24 mb-16  ">
-        <div className="flex items-center justify-center">
-          <svg
-            fill="none"
-            viewBox="0 0 24 24"
-            className="w-12 h-12 text-blue-500"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-            />
-          </svg>
-        </div>
-        <h2 className="text-4xl tracking-tight font-bold">
-          LOGIN TO YOUR ACCOUNT
-        </h2>
-        <span className="text-sm">
-          or{" "}
-          <Link
-            href={""}
-            onClick={() => navigate.push("/register")}
-            className="text-blue-500"
-          >
-            create your account
-          </Link>
-        </span>
-      </div>
-      <div className="flex justify-center my-2 mx-4 md:mx-0 mb-24 ">
-        <form
-          onSubmit={submithandler}
-          className="w-full max-w-xl bg-blue-200 border  rounded-lg shadow-md p-6 duration-300 hover:shadow-md hover:shadow-purple-500"
-        >
-          <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full md:w-full px-3 mb-6">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                Email address
-              </label>
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex flex-col">
+      {/* Login Form */}
+      <main className="flex-grow flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+          {/* Icon */}
+          <div className="flex justify-center mb-4">
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              className="w-12 h-12 text-blue-500"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+          </div>
+
+          <h2 className="text-2xl font-bold text-center text-gray-900">
+            Login to Your Account
+          </h2>
+          <p className="text-center text-sm mt-1 text-gray-600">
+            or{" "}
+            <button
+              onClick={() => router.push("/register")}
+              className="text-blue-500 hover:underline"
+            >
+              create your account
+            </button>
+          </p>
+
+          <form onSubmit={submithandler} className="mt-6 space-y-4">
+            <div>
+              <label className="block text-gray-700 mb-1">Email Address</label>
               <input
-                className="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                 type="email"
                 value={email}
                 onChange={validateEmail}
                 required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
-              {emailToggle ? (
-                ""
-              ) : (
-                <p className="text-red-600">
-                  Email should be less then 36 letter
+              {!emailToggle && (
+                <p className="text-red-600 text-sm mt-1">
+                  Email should be less than 36 characters
                 </p>
               )}
             </div>
-            <div className="w-full md:w-full px-3 mb-6">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                Password
-              </label>
+
+            <div>
+              <label className="block text-gray-700 mb-1">Password</label>
               <input
-                className="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                 type="password"
                 value={password}
                 onChange={validatePassword}
                 required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
-              {passwordToggle ? (
-                ""
-              ) : (
-                <p className="text-red-600">
-                  Password should be more then 7 and less then 21
+              {!passwordToggle && (
+                <p className="text-red-600 text-sm mt-1">
+                  Password should be more than 7 and less than 21 characters
                 </p>
               )}
             </div>
-            <div className="w-full flex items-center justify-between px-3 mb-3 "></div>
-            <div className="w-full md:w-full px-3 mb-6">
-              <button className="appearance-none block w-full from-purple-600 via-purple-500 bg-gradient-to-br 0 to-blue-500 text-white  hover:border-blue-600 duration-300 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-blue-500 focus:outline-none focus:bg-white focus:border-gray-500">
-                SIGN IN
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
+      </main>
     </div>
   );
 }

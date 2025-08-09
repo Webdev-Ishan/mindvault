@@ -36,12 +36,12 @@ export const Navbar = () => {
               >
                 Contact
               </Link>
-              <Link
-                href="#get-started"
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              <button
+                onClick={() => router.push("/register")}
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
               >
                 Get Started
-              </Link>
+              </button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -77,13 +77,12 @@ export const Navbar = () => {
             >
               Contact
             </Link>
-            <Link
-              href="#get-started"
+            <button
               onClick={() => router.push("/register")}
-              className="block py-2 mt-2 bg-blue-500 text-white text-center rounded-lg hover:bg-blue-600"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
             >
               Get Started
-            </Link>
+            </button>
           </div>
         )}
       </nav>
