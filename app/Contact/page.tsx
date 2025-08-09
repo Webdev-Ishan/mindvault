@@ -23,7 +23,7 @@ export default function ContactPage() {
     if (status === "unauthenticated") {
       router.push("/signIn");
     }
-  }, [status, router]);
+  }, [status, router,session]);
 
   // Loading state while session is being fetched
   if (status === "loading") {

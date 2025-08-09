@@ -1,6 +1,5 @@
 "use client";
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
+import { Menu, X, BrainIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -19,7 +18,10 @@ export const Navbar = () => {
               onClick={() => router.push("/")}
               className="flex items-center cursor-pointer"
             >
-              <span className="text-blue-500 font-bold text-xl">MindVault</span>
+              <BrainIcon className="text-blue-500 font-bold h-32  mr-2" />
+              <span className="text-blue-500 font-bold text-2xl">
+                MindVault
+              </span>
             </div>
 
             {/* Desktop Menu */}
@@ -29,6 +31,12 @@ export const Navbar = () => {
                 className="text-gray-700 cursor-pointer hover:text-blue-500"
               >
                 Profile
+              </button>
+              <button
+                onClick={() => router.push("/Reviews")}
+                className="text-gray-700 cursor-pointer hover:text-blue-500"
+              >
+                Reviews
               </button>
               <button
                 onClick={() => router.push("/About")}
@@ -44,7 +52,7 @@ export const Navbar = () => {
               </button>
               <button
                 onClick={() => router.push("/register")}
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg cursor-pointer hover:bg-blue-600"
+                className="bg-blue-500 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-600"
               >
                 Get Started
               </button>
@@ -78,6 +86,12 @@ export const Navbar = () => {
               About
             </button>
             <button
+              onClick={() => router.push("/Reviews")}
+              className="block py-2 text-gray-700 hover:text-blue-500"
+            >
+              Reviews
+            </button>
+            <button
               onClick={() => router.push("/Contact")}
               className="block py-2 text-gray-700 hover:text-blue-500"
             >
@@ -85,7 +99,7 @@ export const Navbar = () => {
             </button>
             <button
               onClick={() => router.push("/register")}
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+              className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600"
             >
               Get Started
             </button>

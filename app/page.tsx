@@ -19,16 +19,16 @@ export default function Home() {
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <div
             onClick={() => router.push("/register")}
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+            className="bg-blue-500 text-white px-6 cursor-pointer py-3 rounded-lg hover:bg-blue-600"
           >
             Get Started
           </div>
-          <Link
-            href="#learn-more"
-            className="border border-blue-500 text-blue-500 px-6 py-3 rounded-lg hover:bg-blue-50"
+          <div
+            onClick={() => router.push("/About")}
+            className="border border-blue-500 text-blue-500 cursor-pointer px-6 py-3 rounded-lg hover:bg-blue-200"
           >
             Learn More
-          </Link>
+          </div>
         </div>
       </header>
     </div>
