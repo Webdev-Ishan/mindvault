@@ -69,28 +69,34 @@ export default function Home() {
 
       {/* How It Works Section */}
       <section className="py-16 px-6 bg-gradient-to-b from-blue-50 to-white text-center">
-        <h2 className="text-3xl font-bold text-gray-900">How It Works</h2>
+        <h2 className="text-3xl font-bold text-blue-500">How It Works</h2>
         <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
           MindVault is built to work seamlessly in three simple steps.
         </p>
         <div className="mt-10 grid gap-8 sm:grid-cols-3 max-w-6xl mx-auto">
-          <div className="p-6 rounded-lg border border-gray-200">
+          <div className="p-6 rounded-lg border border-black">
             <div className="text-blue-500 text-3xl font-bold">1</div>
-            <h3 className="mt-4 font-semibold text-lg text-blue-500">Capture</h3>
+            <h3 className="mt-4 font-semibold text-lg text-blue-500">
+              Capture
+            </h3>
             <p className="text-gray-600 mt-2">
               Save notes, ideas, and links in seconds from any device.
             </p>
           </div>
-          <div className="p-6 rounded-lg border border-gray-200">
+          <div className="p-6 rounded-lg border border-black">
             <div className="text-blue-500 text-3xl font-bold">2</div>
-            <h3 className="mt-4 font-semibold text-lg text-blue-500">Organize</h3>
+            <h3 className="mt-4 font-semibold text-lg text-blue-500">
+              Organize
+            </h3>
             <p className="text-gray-600 mt-2">
               Tag and categorize your content for easy retrieval.
             </p>
           </div>
-          <div className="p-6 rounded-lg border border-gray-200">
+          <div className="p-6 rounded-lg border border-black">
             <div className="text-blue-500 text-3xl font-bold">3</div>
-            <h3 className="mt-4 font-semibold text-lg text-blue-500">Retrieve</h3>
+            <h3 className="mt-4 font-semibold text-lg text-blue-500">
+              Retrieve
+            </h3>
             <p className="text-gray-600 mt-2">
               Access your saved knowledge instantly with our fast search.
             </p>
