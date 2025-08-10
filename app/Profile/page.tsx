@@ -46,7 +46,7 @@ export default function Profile() {
   // Redirect if not logged in
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/signin");
+      router.push("/signIn");
     }
   }, [status, router, session]);
 
@@ -87,7 +87,7 @@ export default function Profile() {
   const onSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post<BackendResponse2>(`/api/user/search`, {
+      const response = await axios.post<BackendResponse2>(`/api/search`, {
         query,
       });
       if (response.data?.success) {
