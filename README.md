@@ -1,6 +1,6 @@
-# 🧠 BrainStorm — Your Second Brain App
+# 🧠 MindVault — Your Second Brain App
 
-**BrainStorm** is a personal knowledge management app designed to help you capture, organize, and revisit your ideas — turning your digital brain into a reliable partner for learning and creativity.
+**MindVault** is a personal knowledge management app designed to help you capture, organize, and revisit your ideas — turning your digital brain into a reliable partner for learning and creativity.
 
 ## 🚀 Live Demo & Screenshots
 
@@ -36,8 +36,8 @@
 ## 📦 Installation & Local Setup
 
 ```bash
- git clone https://github.com/Webdev-Ishan/BrainStorm.git
- cd BrainStorm
+ git clone https://github.com/Webdev-Ishan/mindvault.git
+ cd mindvault
 
 ```
 
@@ -51,9 +51,12 @@
 
 ```bash
 
-DATABASE_URL=<your_db_connection_string>
-JWT_SECRET=<random-secret>
-PORT=3000
+DATABASE_URL=you_postgress_url
+SALT = salt_round_value
+NEXT_AUTH_SECRET=secret for next-auth usage
+GOOGLE_CLIENT_ID=client id for google oauth
+GOOGLE_CLIENT_SECRET=client secret for google oauth
+NODE_ENV="production" | "dev"
 
 
 ```
