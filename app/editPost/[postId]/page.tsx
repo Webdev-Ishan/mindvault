@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
@@ -10,19 +10,60 @@ type BackendResponse = {
   success: boolean;
   message: string;
 };
+type ContentItem = {
+  link: string;
+  type: string;
+  title: string;
+  _id: string;
+  sharable: string;
+};
+
+type BackendResponse2 = {
+  success: boolean;
+  postinfo: ContentItem;
+};
 
 export default function ContactPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-
+  const params = useParams();
+  const postId = params.postId;
+  console.log(postId);
   const [link, setlink] = useState("");
   const [type, settype] = useState("linkedin");
   const [title, settitle] = useState("");
+
+  const fectPostinfo = async () => {
+    try {
+      const response = await axios.post<BackendResponse2>(
+        "/api/getPost",
+        { postId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data && response.data.success) {
+        setlink(response.data.postinfo.link);
+        settitle(response.data.postinfo.title);
+        settype(response.data.postinfo.type);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        console.log(error);
+      }
+    }
+  };
 
   // Redirect if unauthenticated
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/signIn");
+    } else {
+      fectPostinfo();
     }
   }, [status, router, session]);
 
@@ -38,14 +79,14 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post<BackendResponse>(
-        "/api/create",
-        { link, type, title },
+      const response = await axios.put<BackendResponse>(
+        "/api/editPost",
+        { link, type, title, postId },
         { headers: { "Content-Type": "application/json" } }
       );
 
       if (response.data?.success) {
-        toast.success("Post Submitted");
+        toast.success("Updated Successfully");
         setlink("");
         settype("");
         settitle("");
@@ -138,7 +179,7 @@ export default function ContactPage() {
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
             >
-              Submit
+              Update
             </button>
           </form>
         </div>

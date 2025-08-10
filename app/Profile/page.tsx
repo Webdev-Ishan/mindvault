@@ -7,13 +7,13 @@ import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+
 
 type ContentItem = {
   link: string;
   type: string;
   title: string;
-  _id: string;
+  id: string;
   sharable: string;
 };
 
@@ -23,7 +23,7 @@ type BackendResponse = {
   user: {
     username: string;
     email: string;
-    _id: string;
+    id: string;
     contents: ContentItem[];
   };
 };
@@ -197,7 +197,7 @@ export default function Profile() {
                       link={item.link}
                       title={item.title}
                       type={item.type}
-                      id={item._id}
+                      id={item.id}
                     />
                   </div>
 
@@ -214,11 +214,13 @@ export default function Profile() {
                         Visit
                       </button>
                     </a>
-                    <Link href={`/content/${item._id}`}>
-                      <button className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-200 hover:bg-gray-300 transition">
-                        Edit
-                      </button>
-                    </Link>
+
+                    <button
+                      onClick={() => router.push(`/editPost/${item.id}`)}
+                      className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-200 hover:bg-gray-300 transition"
+                    >
+                      Edit
+                    </button>
                   </div>
                 </div>
               </div>

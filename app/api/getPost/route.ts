@@ -2,8 +2,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/DB"; // your Prisma client instance
 import { getToken } from "next-auth/jwt"; // if using next-auth
+import z from "zod";
 
-export async function GET(req: NextRequest) {
+const postidschema = z.object({
+  postId: z.string(),
+});
+export async function POST(req: NextRequest) {
   try {
     const token = await getToken({ req, secret: process.env.NEXT_AUTH_SECRET });
     const userId = token?.id as string | undefined;
@@ -15,19 +19,26 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    const data = await req.json();
+    const parsedbody = postidschema.safeParse(data);
+
+    if (!parsedbody.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: parsedbody.error,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const { postId } = parsedbody.data;
+
     // Find user and include related contents
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      include: {
-        contents: {
-          select: {
-            id: true,
-            link: true,
-            title: true,
-            type: true,
-          },
-        },
-      },
     });
 
     if (!user) {
@@ -37,7 +48,14 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, user }, { status: 200 });
+    const postinfo = await prisma.content.findUnique({
+      where: {
+        userId: userId,
+        id: postId,
+      },
+    });
+
+    return NextResponse.json({ success: true, postinfo }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
