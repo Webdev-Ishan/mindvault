@@ -172,7 +172,7 @@ export default function Profile() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-full px-5 py-3 rounded-lg border border-blue-500 bg-white text-gray-800 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-              placeholder="🔍 Search by Keywords"
+              placeholder="🔍 Search by Title of Post"
             />
           </form>
           <Button
