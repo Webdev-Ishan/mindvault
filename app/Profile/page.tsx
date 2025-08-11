@@ -66,18 +66,14 @@ export default function Profile() {
         const status = error.response.status;
         if (status === 401) {
           toast.error("Please login first");
-          console.log(error);
         } else if (status === 403) {
           toast.error("User not exist");
-          console.log(error);
         } else {
-          toast.error("Soemthign went wrong");
-          console.log(error);
+          toast.error("Something went wrong");
         }
       } else {
         if (error instanceof Error) {
           toast.error("Internal Server Error");
-          console.log(error);
         }
       }
     }
@@ -98,7 +94,6 @@ export default function Profile() {
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error);
         toast.error(error.message);
         setQuery("");
       }
@@ -118,24 +113,24 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col relative">
-      {/* Update Profile Button */}
-      <div className="absolute top-20 right-4 md:top-20 md:right-4 sm:static sm:mt-4 sm:mb-4">
-        <Button
-          onClick={() => router.push("/UpdateProfile")}
-          className="bg-blue-500 text-white hover:bg-blue-600 shadow-md ml-2 mr-2"
-          size={"sm"}
-        >
-          Update Profile
-        </Button>
-      </div>
+      <main className="flex flex-col items-center justify-center flex-grow px-6 py-20 w-full">
+        {/* Top header with username + button */}
+        <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-4xl mb-6 gap-4">
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-wide text-center md:text-left">
+            Welcome
+            <span className="text-blue-500 uppercase font-bold"> {username}</span>
+          </h2>
 
-      <main className="flex flex-col items-center justify-center flex-grow px-6 text-center py-20">
-        <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-wide">
-          Welcome
-          <span className="text-blue-500 uppercase font-bold"> {username}</span>
-        </h2>
+          <Button
+            onClick={() => router.push("/UpdateProfile")}
+            className="bg-blue-500 text-white hover:bg-blue-600 shadow-md"
+            size={"sm"}
+          >
+            Update Profile
+          </Button>
+        </div>
 
-        <p className="text-base md:text-lg text-gray-600 max-w-2xl mb-6 leading-relaxed">
+        <p className="text-base md:text-lg text-gray-600 max-w-2xl mb-6 leading-relaxed text-center">
           <span className="font-semibold text-blue-500 text-xl">
             You are now in your second brain —
           </span>{" "}
@@ -143,7 +138,7 @@ export default function Profile() {
           together seamlessly.
         </p>
 
-        <div className="bg-blue-50 text-gray-800 px-6 py-4 rounded-xl shadow-sm mb-8">
+        <div className="bg-blue-50 text-gray-800 px-6 py-4 rounded-xl shadow-sm mb-8 text-center">
           <p className="text-sm md:text-base font-medium">
             Your working email:&nbsp;
             <span className="text-blue-600 font-bold">{email}</span>
@@ -188,10 +183,10 @@ export default function Profile() {
             arr.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-xl shadow-md w-full h-auto  overflow-hidden border-black border-1 hover:shadow-lg transition-shadow duration-300"
+                className="bg-white rounded-xl shadow-md w-full h-auto overflow-hidden border-black border-1 hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="p-2">
-                  <div className="h-48  w-full mb-6 bg-gray-50 flex items-center justify-center">
+                  <div className="h-48 w-full mb-6 bg-gray-50 flex items-center justify-center">
                     <Card
                       link={item.link}
                       title={item.title}
@@ -232,3 +227,4 @@ export default function Profile() {
     </div>
   );
 }
+
