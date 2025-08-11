@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-
 type ContentItem = {
   link: string;
   type: string;
@@ -120,7 +119,7 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col relative">
       {/* Update Profile Button */}
-      <div className="absolute top-20 right-4">
+      <div className="absolute top-20 right-4 md:top-20 md:right-4 sm:static sm:mt-4 sm:mb-4">
         <Button
           onClick={() => router.push("/UpdateProfile")}
           className="bg-blue-500 text-white hover:bg-blue-600 shadow-md ml-2 mr-2"
