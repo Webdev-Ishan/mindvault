@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
 import LenisProvider from "@/components/LenisProvider";
+import 'lenis/dist/lenis.css'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
