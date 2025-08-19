@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import Footer from "@/components/Footer";
 import { Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
+import LenisProvider from "@/components/LenisProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,22 +36,24 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <Providers>
-          <Navbar />
-          <div className="min-h-screen w-full relative flex flex-col dark">
-            <main className="flex-1">
-              <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-            </main>
-            <Footer />
-          </div>
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={true}
-            closeOnClick
-            pauseOnHover
-            theme="dark"
-          />
+          <LenisProvider>
+            <Navbar />
+            <div className="min-h-screen w-full relative flex flex-col dark">
+              <main className="flex-1">
+                <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+              </main>
+              <Footer />
+            </div>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={true}
+              closeOnClick
+              pauseOnHover
+              theme="dark"
+            />
+          </LenisProvider>
         </Providers>
       </body>
     </html>
