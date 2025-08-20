@@ -52,7 +52,7 @@ export const Navbar = () => {
               </button>
               <button
                 onClick={() => router.push("/register")}
-                className="bg-blue-500 text-white px-3 py-2 rounded-lg cursor-pointer hover:bg-blue-600"
+                className="px-4 py-2 rounded-3xl bg-blue-500 text-white font-sans hover:bg-blue-700 transition shadow-lg"
               >
                 Get Started
               </button>
